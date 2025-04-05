@@ -6,7 +6,6 @@ import com.example.modules.users.domain.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class UserRowMapper {
 
