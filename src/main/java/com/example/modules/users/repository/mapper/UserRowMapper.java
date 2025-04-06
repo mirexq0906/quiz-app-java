@@ -10,18 +10,17 @@ import java.sql.Timestamp;
 public class UserRowMapper {
 
     public static User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        User user = new User();
-        user.setId(resultSet.getLong("id"));
-        user.setUsername(resultSet.getString("username"));
-        user.setEmail(resultSet.getString("email"));
-        user.setPassword(resultSet.getString("password"));
-        user.setRole(Role.valueOf(resultSet.getString("role")));
-
         Timestamp createdAt = resultSet.getTimestamp("created_at");
         Timestamp updatedAt = resultSet.getTimestamp("updated_at");
-        user.setCreateTime(createdAt.toLocalDateTime());
-        user.setUpdateTime(updatedAt.toLocalDateTime());
 
-        return user;
+        return User.builder()
+                .id(resultSet.getLong("id"))
+                .username(resultSet.getString("username"))
+                .email(resultSet.getString("email"))
+                .password(resultSet.getString("password"))
+                .role(Role.valueOf(resultSet.getString("role")))
+                .createTime(createdAt.toLocalDateTime())
+                .updateTime(updatedAt.toLocalDateTime())
+                .build();
     }
 }
