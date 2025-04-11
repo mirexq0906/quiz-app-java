@@ -6,12 +6,13 @@ import com.example.modules.users.domain.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class UserRowMapper {
 
     public static User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        Timestamp createdAt = resultSet.getTimestamp("created_at");
-        Timestamp updatedAt = resultSet.getTimestamp("updated_at");
+        LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
+        LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
 
         return User.builder()
                 .id(resultSet.getLong("id"))
@@ -19,8 +20,8 @@ public class UserRowMapper {
                 .email(resultSet.getString("email"))
                 .password(resultSet.getString("password"))
                 .role(Role.valueOf(resultSet.getString("role")))
-                .createTime(createdAt.toLocalDateTime())
-                .updateTime(updatedAt.toLocalDateTime())
+                .createTime(createdAt)
+                .updateTime(updatedAt)
                 .build();
     }
 }

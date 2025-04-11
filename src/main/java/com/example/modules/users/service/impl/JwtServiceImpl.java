@@ -49,7 +49,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isValidToken(String token) {
-        return this.extractAllClaims(token).getExpiration().before(new Date());
+        return !this.extractAllClaims(token).getExpiration().before(new Date());
     }
 
     @Override
