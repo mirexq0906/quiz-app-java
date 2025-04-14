@@ -41,8 +41,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public void delete(Module module) {
-        this.moduleRepository.delete(module);
+    public void delete(Long id) {
+        this.moduleRepository.delete(id);
     }
 
 }

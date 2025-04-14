@@ -83,8 +83,8 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     }
 
     @Override
-    public void delete(Module module) {
-        this.jdbcTemplate.update(this.DELETE);
+    public void delete(Long id) {
+        this.jdbcTemplate.update(this.DELETE, id);
     }
 
 }

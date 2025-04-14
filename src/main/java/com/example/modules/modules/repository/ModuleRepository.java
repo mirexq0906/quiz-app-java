@@ -15,6 +15,6 @@ public interface ModuleRepository {
 
     Module update(Module module);
 
-    void delete(Module module);
+    void delete(Long id);
 
 }
