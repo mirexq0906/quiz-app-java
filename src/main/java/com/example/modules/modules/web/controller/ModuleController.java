@@ -1,5 +1,6 @@
 package com.example.modules.modules.web.controller;
 
+import com.example.modules.module_folder.service.ModuleFolderService;
 import com.example.modules.modules.service.ModuleService;
 import com.example.modules.modules.web.dto.ModuleDto;
 import com.example.modules.modules.web.mapper.ModuleMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ModuleController {
 
     private final ModuleService moduleService;
+    private final ModuleFolderService moduleFolderService;
     private final ModuleMapper moduleMapper;
 
     @GetMapping
@@ -34,6 +36,16 @@ public class ModuleController {
                         this.moduleService.findById(id)
                 )
         );
+    }
+
+    @GetMapping("/by-folder/{folderId}")
+    public ResponseEntity<ModuleListResponse> findByFolderId(@PathVariable Long folderId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        this.moduleMapper.moduleListToResponse(
+                                this.moduleFolderService.findModulesByFolderId(folderId)
+                        )
+                );
     }
 
     @PostMapping
@@ -61,6 +73,18 @@ public class ModuleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ModuleResponse> delete(@PathVariable Long id) {
         this.moduleService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/{moduleId}/folder/{folderId}")
+    public ResponseEntity<Void> addToFolder(@PathVariable Long moduleId, @PathVariable Long folderId) {
+        this.moduleFolderService.addModuleToFolder(moduleId, folderId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{moduleId}/folder/{folderId}")
+    public ResponseEntity<Void> removeFromFolder(@PathVariable Long moduleId, @PathVariable Long folderId) {
+        this.moduleFolderService.removeModuleFromFolder(moduleId, folderId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

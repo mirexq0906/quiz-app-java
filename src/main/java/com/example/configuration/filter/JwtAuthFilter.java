@@ -32,12 +32,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader(HEADER_NAME);
 
         if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
-            System.out.println(1);
             bearerToken = bearerToken.substring(BEARER_PREFIX.length());
         }
 
         if (bearerToken != null && this.jwtService.isValidToken(bearerToken)) {
-            System.out.println(2);
             SecurityContextHolder.getContext().setAuthentication(
                     this.jwtService.getAuthentication(bearerToken)
             );

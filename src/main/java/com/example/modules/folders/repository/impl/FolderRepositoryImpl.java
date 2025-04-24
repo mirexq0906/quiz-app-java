@@ -1,8 +1,8 @@
-package com.example.modules.modules.repository.impl;
+package com.example.modules.folders.repository.impl;
 
-import com.example.modules.modules.domain.Module;
-import com.example.modules.modules.repository.ModuleRepository;
-import com.example.modules.modules.repository.mapper.ModuleRowMapper;
+import com.example.modules.folders.domain.Folder;
+import com.example.modules.folders.repository.FolderRepository;
+import com.example.modules.folders.repository.mapper.FolderRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,71 +12,74 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ModuleRepositoryImpl implements ModuleRepository {
+public class FolderRepositoryImpl implements FolderRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
     private final String FIND_ALL = """
             SELECT id, title, description, user_id, created_at, updated_at
-            FROM modules
+            FROM folders
             """;
 
     private final String FIND_BY_ID = """
             SELECT id, title, description, user_id, created_at, updated_at
-            FROM modules WHERE id = ?
+            FROM folders
+            WHERE id = ?
             """;
 
     private final String CREATE = """
-            INSERT INTO modules(title, description, user_id)
+            INSERT INTO folders(title, description, user_id)
             VALUES (?, ?, ?)
-            RETURNING id, title, description, user_id, created_at, updated_at
+            RETURNING id, title, description, user_id, created_at, updated_at;
             """;
 
     private final String UPDATE = """
-            UPDATE modules
+            UPDATE folders
             SET title = ?, description = ?
             WHERE id = ?
-            RETURNING id, title, description, user_id, created_at, updated_at
+            RETURNING id, title, description, user_id, created_at, updated_at;
             """;
 
     private final String DELETE = """
-            DELETE FROM modules
+            DELETE FROM folders
             WHERE id = ?
             """;
 
     @Override
-    public List<Module> findAll() {
+    public List<Folder> findAll() {
         return this.jdbcTemplate.query(
                 this.FIND_ALL,
-                ModuleRowMapper::mapRow
+                FolderRowMapper::mapRow
         );
     }
 
     @Override
-    public Optional<Module> findById(Long id) {
-        Module module = this.jdbcTemplate.queryForObject(
+    public Optional<Folder> findById(Long id) {
+        Folder folder = this.jdbcTemplate.queryForObject(
                 this.FIND_BY_ID,
-                ModuleRowMapper::mapRow,
+                FolderRowMapper::mapRow,
                 id
         );
-        return Optional.ofNullable(module);
+
+        return Optional.ofNullable(folder);
     }
 
     @Override
-    public Module create(Module module) {
+    public Folder create(Folder folder) {
         return this.jdbcTemplate.queryForObject(
                 this.CREATE,
-                ModuleRowMapper::mapRow,
-                module.getTitle(), module.getDescription(), module.getUserId()
+                FolderRowMapper::mapRow,
+                folder.getTitle(), folder.getDescription(), folder.getUserId()
         );
     }
 
     @Override
-    public Module update(Module module) {
+    public Folder update(Folder folder) {
         return this.jdbcTemplate.queryForObject(
                 this.UPDATE,
-                ModuleRowMapper::mapRow,
-                module.getTitle(), module.getDescription(), module.getId()
+                FolderRowMapper::mapRow,
+                folder.getTitle(), folder.getDescription(),
+                folder.getId()
         );
     }
 
