@@ -16,6 +16,7 @@ public class ModuleRowMapper {
                 .id(resultSet.getLong("id"))
                 .title(resultSet.getString("title"))
                 .description(resultSet.getString("description"))
+                .code(resultSet.getString("code"))
                 .userId(resultSet.getLong("user_id"))
                 .updatedAt(updatedAt)
                 .createdAt(createdAt)

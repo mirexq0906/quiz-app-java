@@ -7,6 +7,6 @@ public class ModuleDto {
 
     private String title;
     private String description;
-    private Long userId;
+    private String code;
 
 }

@@ -4,7 +4,9 @@ import com.example.exception.DomainNotFoundException;
 import com.example.modules.modules.domain.Module;
 import com.example.modules.modules.repository.ModuleRepository;
 import com.example.modules.modules.service.ModuleService;
+import com.example.modules.users.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,8 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public Module create(Module module) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        module.setUserId(user.getId());
         return this.moduleRepository.create(module);
     }
 

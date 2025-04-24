@@ -27,16 +27,16 @@ public class ModuleRepositoryImpl implements ModuleRepository {
             """;
 
     private final String CREATE = """
-            INSERT INTO modules(title, description, user_id)
-            VALUES (?, ?, ?)
-            RETURNING id, title, description, user_id, created_at, updated_at
+            INSERT INTO modules(title, description, code, user_id)
+            VALUES (?, ?, ?, ?)
+            RETURNING id, title, description, code, user_id, created_at, updated_at
             """;
 
     private final String UPDATE = """
             UPDATE modules
-            SET title = ?, description = ?
+            SET title = ?, description = ?, code = ?
             WHERE id = ?
-            RETURNING id, title, description, user_id, created_at, updated_at
+            RETURNING id, title, description, code, user_id, created_at, updated_at
             """;
 
     private final String DELETE = """
@@ -67,7 +67,7 @@ public class ModuleRepositoryImpl implements ModuleRepository {
         return this.jdbcTemplate.queryForObject(
                 this.CREATE,
                 ModuleRowMapper::mapRow,
-                module.getTitle(), module.getDescription(), module.getUserId()
+                module.getTitle(), module.getDescription(), module.getCode(), module.getUserId()
         );
     }
 
@@ -76,7 +76,7 @@ public class ModuleRepositoryImpl implements ModuleRepository {
         return this.jdbcTemplate.queryForObject(
                 this.UPDATE,
                 ModuleRowMapper::mapRow,
-                module.getTitle(), module.getDescription(), module.getId()
+                module.getTitle(), module.getDescription(), module.getCode(), module.getId()
         );
     }
 

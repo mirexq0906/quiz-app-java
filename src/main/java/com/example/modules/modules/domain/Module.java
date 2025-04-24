@@ -11,8 +11,9 @@ public class Module {
 
     private Long id;
     private String title;
-    private String description;
     private Long userId;
+    private String description;
+    private String code;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

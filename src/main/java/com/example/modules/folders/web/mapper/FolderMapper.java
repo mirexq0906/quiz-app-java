@@ -29,7 +29,6 @@ public class FolderMapper {
                 .id(folder.getId())
                 .title(folder.getTitle())
                 .description(folder.getDescription())
-                .userId(folder.getUserId())
                 .createdAt(folder.getCreatedAt())
                 .updatedAt(folder.getUpdatedAt())
                 .build();

@@ -15,7 +15,7 @@ public class ModuleMapper {
         return Module.builder()
                 .title(moduleDto.getTitle())
                 .description(moduleDto.getDescription())
-                .userId(moduleDto.getUserId())
+                .code(moduleDto.getCode())
                 .build();
     }
 
@@ -30,6 +30,7 @@ public class ModuleMapper {
                 .id(module.getId())
                 .title(module.getTitle())
                 .description(module.getDescription())
+                .code(module.getCode())
                 .createdAt(module.getCreatedAt())
                 .updatedAt(module.getUpdatedAt())
                 .build();

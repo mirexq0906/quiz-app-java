@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS modules (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
     description TEXT,
+    code TEXT,
     user_id BIGINT,
     CONSTRAINT fk_user_module FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
