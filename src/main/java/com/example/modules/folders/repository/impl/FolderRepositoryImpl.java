@@ -45,6 +45,10 @@ public class FolderRepositoryImpl implements FolderRepository {
             WHERE id = ?
             """;
 
+    private final String COUNT = """
+            SELECT COUNT(*) FROM folders
+            """;
+
     @Override
     public List<Folder> findAll() {
         return this.jdbcTemplate.query(
@@ -86,6 +90,13 @@ public class FolderRepositoryImpl implements FolderRepository {
     @Override
     public void delete(Long id) {
         this.jdbcTemplate.update(this.DELETE, id);
+    }
+
+    @Override
+    public Integer count() {
+        return this.jdbcTemplate.queryForObject(
+                this.COUNT, Integer.class
+        );
     }
 
 }

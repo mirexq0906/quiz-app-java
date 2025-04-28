@@ -17,4 +17,6 @@ public interface FolderRepository {
 
     void delete(Long id);
 
+    Integer count();
+
 }

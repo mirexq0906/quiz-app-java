@@ -40,6 +40,8 @@ public class UserRepositoryImpl implements UserRepository {
             RETURNING id, username, email, password, role, created_at, updated_at
             """;
 
+    private final String COUNT = "SELECT COUNT(*) FROM users";
+
     @Override
     public Optional<User> findById(Long id) {
         User user = this.jdbcTemplate.queryForObject(
@@ -80,6 +82,13 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUsername(), user.getEmail(),
                 user.getPassword(), user.getRole().toString(),
                 user.getId()
+        );
+    }
+
+    @Override
+    public Integer count() {
+        return this.jdbcTemplate.queryForObject(
+                this.COUNT, Integer.class
         );
     }
 

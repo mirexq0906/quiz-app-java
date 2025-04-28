@@ -17,7 +17,7 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private final String FIND_ALL = """
-            SELECT id, title, description, user_id, created_at, updated_at
+            SELECT id, title, description, code, user_id, created_at, updated_at
             FROM modules
             """;
 
@@ -42,6 +42,10 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     private final String DELETE = """
             DELETE FROM modules
             WHERE id = ?
+            """;
+
+    private final String COUNT = """
+            SELECT COUNT(*) FROM modules
             """;
 
     @Override
@@ -83,6 +87,13 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     @Override
     public void delete(Long id) {
         this.jdbcTemplate.update(this.DELETE, id);
+    }
+
+    @Override
+    public Integer count() {
+        return this.jdbcTemplate.queryForObject(
+                this.COUNT, Integer.class
+        );
     }
 
 }
