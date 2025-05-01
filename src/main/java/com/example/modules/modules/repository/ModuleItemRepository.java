@@ -1,19 +1,22 @@
-package com.example.modules.modules.service;
+package com.example.modules.modules.repository;
 
 import com.example.modules.modules.domain.ModuleItem;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ModuleItemService {
+public interface ModuleItemRepository {
 
     List<ModuleItem> findModuleItemsByModuleId(Long moduleId);
 
-    ModuleItem findModuleItemById(Long id);
+    Optional<ModuleItem> findModuleItemById(Long id);
 
     ModuleItem addItemToModule(ModuleItem moduleItem);
 
     ModuleItem updateItemToModule(ModuleItem moduleItem);
 
     void removeItemFromModule(Long moduleItemId);
+
+    int count();
 
 }

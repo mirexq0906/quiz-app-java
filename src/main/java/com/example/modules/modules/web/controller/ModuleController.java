@@ -1,6 +1,7 @@
 package com.example.modules.modules.web.controller;
 
 import com.example.modules.module_folder.service.ModuleFolderService;
+import com.example.modules.modules.service.FileProcessorService;
 import com.example.modules.modules.service.ModuleService;
 import com.example.modules.modules.web.dto.ModuleDto;
 import com.example.modules.modules.web.mapper.ModuleMapper;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/module")
@@ -18,6 +20,7 @@ public class ModuleController {
 
     private final ModuleService moduleService;
     private final ModuleFolderService moduleFolderService;
+    private final FileProcessorService fileProcessorService;
     private final ModuleMapper moduleMapper;
 
     @GetMapping
@@ -86,6 +89,12 @@ public class ModuleController {
     public ResponseEntity<Void> removeFromFolder(@PathVariable Long moduleId, @PathVariable Long folderId) {
         this.moduleFolderService.removeModuleFromFolder(moduleId, folderId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<Void> importModulesFromFile(@RequestParam MultipartFile file) {
+        this.fileProcessorService.readFile(file);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

@@ -81,7 +81,7 @@ public class FolderControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = "test", userDetailsServiceBeanName = "userServiceImpl", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    public void delete_shouldReturnDeletedFolder() throws Exception {
+    public void delete_shouldReturnVoid() throws Exception {
         Integer countFolders = this.folderRepository.count();
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/folder/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());

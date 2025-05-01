@@ -12,7 +12,6 @@ public class ModuleResponse {
     private Long id;
     private String title;
     private String description;
-    private String code;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

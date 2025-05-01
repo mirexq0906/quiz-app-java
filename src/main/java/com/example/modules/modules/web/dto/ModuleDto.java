@@ -7,6 +7,5 @@ public class ModuleDto {
 
     private String title;
     private String description;
-    private String code;
 
 }
