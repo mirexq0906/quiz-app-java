@@ -91,9 +91,9 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping("/import")
-    public ResponseEntity<Void> importModulesFromFile(@RequestParam MultipartFile file) {
-        this.fileProcessorService.readFile(file);
+    @PostMapping("/{moduleId}/import")
+    public ResponseEntity<Void> importModulesFromFile(@PathVariable Long moduleId, @RequestParam MultipartFile file) {
+        this.fileProcessorService.readFile(file, moduleId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

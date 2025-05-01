@@ -45,7 +45,6 @@ public class ModuleItemRepositoryImpl implements ModuleItemRepository {
 
     @Override
     public ModuleItem addItemToModule(ModuleItem moduleItem) {
-        System.out.println(moduleItem);
         return this.jdbcTemplate.queryForObject(
                 """
                         INSERT INTO module_items(title, description, code, module_id) 

@@ -1,7 +1,10 @@
 package com.example.modules.modules.service.impl;
 
+import com.example.exception.FileProcessorException;
 import com.example.modules.modules.domain.Module;
+import com.example.modules.modules.domain.ModuleItem;
 import com.example.modules.modules.service.FileProcessorService;
+import com.example.modules.modules.service.ModuleItemService;
 import com.example.modules.modules.service.ModuleService;
 import com.example.modules.users.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +19,24 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class FileProcessorServiceImpl implements FileProcessorService {
 
-    private ModuleService moduleService;
+    private final ModuleService moduleService;
+    private final ModuleItemService moduleItemService;
 
     @Override
-    public void readFile(MultipartFile file) {
+    public void readFile(MultipartFile file, Long moduleId) {
+        Module module = this.moduleService.findById(moduleId);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!module.getUserId().equals(user.getId())) {
+            throw new FileProcessorException("user is not logged in");
+        }
+
         try (InputStream stream = file.getInputStream()) {
             byte[] bytes = new byte[1024];
             int bytesRead;
             StringBuilder content = new StringBuilder();
 
             while ((bytesRead = stream.read(bytes)) != -1) {
-                System.out.println(bytesRead);
                 content.append(new String(bytes, 0, bytesRead));
             }
 
@@ -36,13 +45,13 @@ public class FileProcessorServiceImpl implements FileProcessorService {
                 String[] moduleStr = modulesStr[i].split("\\Q((|))\\E");
 
                 if (moduleStr.length == 2) {
-                    com.example.modules.modules.domain.Module module = Module.builder()
+                    ModuleItem moduleItem = ModuleItem.builder()
                             .title(moduleStr[0])
                             .description(moduleStr[1])
-                            .userId(user.getId())
+                            .moduleId(moduleId)
                             .build();
 
-                    System.out.println(module);
+                    this.moduleItemService.addItemToModule(moduleItem);
                 }
 
             }

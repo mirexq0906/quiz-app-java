@@ -4,6 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileProcessorService {
 
-    void readFile(MultipartFile file);
+    void readFile(MultipartFile file, Long moduleId);
 
 }
